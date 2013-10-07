@@ -23,19 +23,19 @@ static int lcd_init (lua_State *L) {
   }
   int rows ,  cols,  bits, rs,  strb, d0,  d1,  d2,  d3,  d4, d5,  d6,  d7;
   
-  rows = (int) lua_tointeger(L,2);
-  cols = (int) lua_tointeger(L,3);
-  bits = (int) lua_tointeger(L,4);
-  rs = (int) lua_tointeger(L,5);
-  strb = (int) lua_tointeger(L,6);
-  d0 = (int) lua_tointeger(L,7);
-  d1 = (int) lua_tointeger(L,8);
-  d2 = (int) lua_tointeger(L,9);
-  d3 = (int) lua_tointeger(L,10);
-  d4 = (int) lua_tointeger(L,11);
-  d5 = (int) lua_tointeger(L,12);
-  d6 = (int) lua_tointeger(L,13);
-  d7 = (int) lua_tointeger(L,14);
+  rows = (int) lua_tointeger(L,1);
+  cols = (int) lua_tointeger(L,2);
+  bits = (int) lua_tointeger(L,3);
+  rs = (int) lua_tointeger(L,4);
+  strb = (int) lua_tointeger(L,5);
+  d0 = (int) lua_tointeger(L,6);
+  d1 = (int) lua_tointeger(L,7);
+  d2 = (int) lua_tointeger(L,8);
+  d3 = (int) lua_tointeger(L,9);
+  d4 = (int) lua_tointeger(L,10);
+  d5 = (int) lua_tointeger(L,11);
+  d6 = (int) lua_tointeger(L,12);
+  d7 = (int) lua_tointeger(L,13);
   
   int handle = lcdInit ( rows,  cols,  bits, rs,  strb, d0,  d1,  d2,  d3,  d4, d5,  d6,  d7) ;
   
