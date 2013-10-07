@@ -18,7 +18,7 @@ typedef struct lcd_handle{
 }lcd_handle;
 
 static int lcd_init (lua_State *L) {
-  if(lua_gettop(L) != 14){
+  if(lua_gettop(L) != 13){
 	  luaL_error(L,"Incorrect number of arguments.");
   }
   int rows ,  cols,  bits, rs,  strb, d0,  d1,  d2,  d3,  d4, d5,  d6,  d7;
