@@ -21,7 +21,7 @@ static int lcd_init (lua_State *L) {
   if(lua_gettop(L) != 13){
 	  luaL_error(L,"Incorrect number of arguments.");
   }
-  int rows ,  cols,  bits, rs,  strb, d0,  d1,  d2,  d3,  d4, d5,  d6,  d7;
+  int rows, cols,  bits, rs,  strb, d0,  d1,  d2,  d3,  d4, d5,  d6,  d7;
   
   rows = (int) lua_tointeger(L,1);
   cols = (int) lua_tointeger(L,2);
@@ -47,6 +47,7 @@ static int lcd_init (lua_State *L) {
   lcd_handle *l = lua_newuserdata(L,sizeof(lcd_handle));
   luaL_getmetatable(L,"wiringPi.lcd");
   lua_setmetatable(L,-2);
+  l->handle = handle;
   return 1;
 }
 
@@ -96,6 +97,13 @@ static int lcd_print (lua_State *L) {
 	return 0;
 }
 
+static int lcd_char (lua_State *L) {
+	ARGCHECK(2);
+	unsigned char c = (unsigned char) lua_tointeger(L,2);
+	lcdPutchar(l->handle,c);
+	return 0;
+}
+
 static int lcd_def (lua_State *L) {
 	ARGCHECK(3);
 	int i = lua_tointeger(L,2);
@@ -123,14 +131,17 @@ static const luaL_reg ulcdlib[] = {
 {"blink",   lcd_blink},
 {"position",   lcd_position},
 {"print",   lcd_print},
+{"char",   lcd_char},
 {NULL, NULL}
 };
 
 LUALIB_API int luaopen_lcd (lua_State *L) {
   if (wiringPiSetup () == -1) luaL_error(L,"piBoardRev: Unable to determine board revision from /proc/cpuinfo");
   luaL_newmetatable(L, "wiringPi.lcd");
-  luaL_register(L, NULL, ulcdlib);
-  lua_settop(L,0);
+  lua_pushstring(L, "__index");
+  lua_pushvalue(L, -2);  
+  lua_settable(L, -3);
+  lua_openlib(L, NULL, ulcdlib,0);
   luaL_register(L, "lcd", lcdlib);
   return 1;
 }
